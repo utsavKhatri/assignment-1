@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head.ejs') %>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css"
+      integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="container my-3">
+      <!-- heading section  -->
+      <div class="header d-flex justify-content-between px-2 my-4">
+        <h1>Welcome to <%= title %></h1>
+        <a href="/add"><button class="btn btn-primary">Add Courses</button></a>
+      </div>
+<!-- table  -->
+      <table class="table container my-4 w-75">
+        <thead>
+          <tr class="table-dark">
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Duration</th>
+            <th scope="col">Fees</th>
+            <th scope="col" colspan="2">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if(data.length<1){ %>
+          <tr>
+            <td colspan="5" class="text-center">
+              No data available in database
+            </td>
+          </tr>
+          <% } else{ data.map((v, i)=>{ %>
+          <tr>
+            <td><%= i+1 %></td>
+            <td><%= v.name %></td>
+            <td><%= v.duration %></td>
+            <td><%= v.fees %></td>
+            <td>
+              <a class="edit-btn" href="/edit/<%= v.id  %>"
+                ><i class="fa fa-duotone fa-pen-to-square"></i
+              ></a>
+            </td>
+            <td>
+              <i
+                id="<%= v.id  %>"
+                class="delete-btn fa fa-duotone fa-trash"
+              ></i>
+              <!-- <img id="<%= v.id  %>" class="delete-btn" src="https://img.icons8.com/fluency/24/null/delete-forever.png"/> -->
+            </td>
+          </tr>
+          <% }) }%>
+        </tbody>
+      </table>
+    </div>
+    <script>
+      const delCourse = document.querySelectorAll(".delete-btn");
+      delCourse.forEach((item) => {
+        item.addEventListener("click", (e) => {
+          const endpoint = `/deleteCourse/${item.id}`;
+          console.log(endpoint);
+          fetch(endpoint, { method: "DELETE" })
+            .then((response) => response.json())
+            .then((data) => {
+              window.location.href = data.redirect;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        });
+      });
+    </script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

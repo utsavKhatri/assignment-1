@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head.ejs')  %>
+      </head>
+<body>
+    <%- include('./partials/nav.ejs') %>
+    <div class="container w-75 my-3">
+        <div class="header my-4">
+            <h1>
+                Welcome to <%= title  %>
+            </h1>
+            <p>Enter data that want to update</p>
+        </div>
+
+        <form action="/edit/<%= data[0].id  %>" method="post">
+            <div class="form-group my-2">
+              <label for="exampleInputName1">Course Name :</label>
+              <input type="text"  name="name" class="form-control" id="exampleInputName1" placeholder="Enter Course name" value="<%= data[0].name  %>">
+            </div>
+            <div class="form-group my-2">
+                <label for="exampleInputfees1">Fees :</label>
+                <input type="number"  name="fees" class="form-control" id="exampleInputfees1" aria-describedby="emailHelp" placeholder="Enter Fees amount" value="<%= data[0].fees  %>">
+            </div>
+            <div class="form-group my-2">
+            <label for="inputDuration1" class="form-label">Course Duration :</label>
+            <select id="inputDuration1" class="form-select" name="duration">
+            <option value="<%= data[0].duration  %>"><%= data[0].duration  %></option>
+              <option value="1-Month">1-Month</option>
+              <option value="3-Month">3-Month</option>
+              <option value="6-Month">6-Month</option>
+              <option value="12-Month">12-Month</option>
+              <option value="18-Month">18-Month</option>
+            </select></div> 
+            <div class="form-group d-flex justify-content-center gap-4">
+                <button type="submit" class="btn btn-success">Update</button>
+                <button type="reset" class="btn btn-outline-danger">Reset</button>
+                <button
+                type="button"
+                class="btn btn-outline-warning"
+                onclick="history.back()"
+              >
+                Back
+              </button>
+              </div>
+          </form>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+</body>
+</html>
