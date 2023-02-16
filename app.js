@@ -33,5 +33,6 @@ connection.connect((err, data) => {
 /* Importing the courseController.js file and passing the app object to it. */
 courseController(app);
 
-app.listen(3000);
-console.log(`you are listening to http://localhost:3000/`);
+app.listen(3000, () => {
+  console.log(`you are listening to http://localhost:3000/`);
+});
