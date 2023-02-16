@@ -2,8 +2,8 @@ import { Router } from "express";
 import { connection } from "../app.js";
 
 const router = Router();
-/* GET home page. */
 
+/* GET home page. */
 router.get("/", (req, res) => {
   connection.query("select * from courses_table order by id", (err, data) => {
     if (err) {
@@ -18,11 +18,13 @@ router.get("/add", (req, res) => {
   res.render("addCourse", { title: "Add Course page" });
 });
 
+/* This is a route that renders the about.ejs file. */
 router.get("/about",(req,res)=>{
     res.render("about", { title: "About page" });
 })
 
 
+/* This is a route that handle post req and add data to database */
 router.post("/add", (req, res) => {
   const user = [req.body.name, req.body.duration, req.body.fees];
   console.log(user);
@@ -43,25 +45,29 @@ router.post("/add", (req, res) => {
   );
 });
 
-router.get("/edit/:id", function (req, res, next) {
-  connection.query(
-    `SELECT * FROM courses_table WHERE id = ${req.params.id}`,
-    (err, data) => {
-      if (err) throw err;
-      // if user not found
-      else {
-        // if user found
-        console.log(data);
-        // render to views/user/edit.ejs template file
-        res.render("editCourse", {
-          title: "Edit User",
-          data: data,
-        });
-      }
-    }
-  );
-});
+/* This is a route that renders the editCourse.ejs file. */
+router.get("/edit/:id", (req, res) => {
+    connection.query(
+      `SELECT * FROM courses_table WHERE id = ${req.params.id}`,
+      (err, data) => {
+        if (err)
+          throw err;
 
+        // if user not found
+        else {
+          // if user found
+          console.log(data);
+          // render to views/user/edit.ejs template file
+          res.render("editCourse", {
+            title: "Edit User",
+            data: data,
+          });
+        }
+      }
+    );
+  });
+
+/* This is a route that handle post req and update data to database */
 router.post("/edit/:id", (req, res) => {
   const updateUser = [req.body.name, req.body.duration, req.body.fees];
   console.log(updateUser);
@@ -83,6 +89,7 @@ router.post("/edit/:id", (req, res) => {
   );
 });
 
+/* This is a route that handle delete req and delete data from database. */
 router.delete("/deleteCourse/:id", (req, res) => {
   const deleteId = req.params.id;
   console.log(deleteId);

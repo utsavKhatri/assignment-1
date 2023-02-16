@@ -1,3 +1,8 @@
 *{
     color-scheme: "dark light";
 }
+#example_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
